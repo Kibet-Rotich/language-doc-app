@@ -2,6 +2,8 @@ import os
 from fastapi import FastAPI, File, UploadFile, Form, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
+from fastapi.staticfiles import StaticFiles
+
 
 from .database import SessionLocal, engine
 from .models import Base, Recording
@@ -10,6 +12,17 @@ from .models import Base, Recording
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+
+# Serve static files (frontend)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+AUDIO_DIR = os.path.join(BASE_DIR, "uploads/audio")
+
+app.mount(
+    "/audio",
+    StaticFiles(directory=AUDIO_DIR),
+    name="audio"
+)
+
 
 # Allow frontend access
 app.add_middleware(
@@ -32,20 +45,28 @@ def get_db():
 UPLOAD_DIR = "backend/uploads/audio"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
+import uuid
+
 @app.post("/api/upload-audio")
 async def upload_audio(
     file: UploadFile = File(...),
     transcript: str = Form(None),
     db: Session = Depends(get_db)
 ):
-    # Save file locally
-    file_location = os.path.join(UPLOAD_DIR, file.filename)
-    with open(file_location, "wb") as buffer:
+    # Generate a unique name
+    ext = file.filename.split(".")[-1] or "webm"
+    unique_name = f"{uuid.uuid4()}.{ext}"
+
+    save_path = os.path.join(UPLOAD_DIR, unique_name)
+    with open(save_path, "wb") as buffer:
         buffer.write(await file.read())
 
-    # Save metadata to DB
+    # Public URL
+    file_url = f"/audio/{unique_name}"
+
+    # Save metadata
     recording = Recording(
-        file_path=file_location,
+        file_path=file_url,
         transcript=transcript
     )
     db.add(recording)
@@ -58,6 +79,7 @@ async def upload_audio(
         "file_path": recording.file_path,
         "transcript": recording.transcript
     }
+
 
 @app.get("/api/list-recordings")
 def list_recordings(db: Session = Depends(get_db)):

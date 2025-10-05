@@ -13,3 +13,10 @@ body {
 textarea {
   width: 100%;
 }
+
+.recording-card {
+  border: 1px solid #ccc;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+}
