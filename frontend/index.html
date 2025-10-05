@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Language Recording</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <h2>Record and Upload Audio</h2>
+
+  <div id="controls">
+    <button id="startBtn">Start Recording</button>
+    <button id="stopBtn" disabled>Stop Recording</button>
+  </div>
+
+  <audio id="audioPreview" controls></audio>
+
+  <form id="uploadForm">
+    <label for="transcript">Transcript (optional):</label><br />
+    <textarea id="transcript" name="transcript" rows="4" cols="50"></textarea><br /><br />
+    <button type="submit">Upload</button>
+  </form>
+
+  <p id="status"></p>
+
+  <script src="script.js"></script>
+</body>
+</html>

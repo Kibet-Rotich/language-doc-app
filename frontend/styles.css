@@ -1,0 +1,15 @@
+body {
+  font-family: Arial, sans-serif;
+  max-width: 600px;
+  margin: 30px auto;
+  padding: 10px;
+}
+
+#controls button {
+  margin-right: 10px;
+  margin-bottom: 20px;
+}
+
+textarea {
+  width: 100%;
+}
