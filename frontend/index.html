@@ -6,22 +6,32 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <h2>Record and Upload Audio</h2>
+  <nav class="navbar">
+    <h1 class="logo">Ogiek Recorder</h1>
+    <ul>
+      <li><a href="index.html" class="active">Record</a></li>
+      <li><a href="view.html">View Recordings</a></li>
+    </ul>
+  </nav>
 
-  <div id="controls">
-    <button id="startBtn">Start Recording</button>
-    <button id="stopBtn" disabled>Stop Recording</button>
+  <div class="container">
+    <h2>Record and Upload Audio</h2>
+
+    <div id="controls" class="button-group">
+      <button id="startBtn" class="btn primary">Start Recording</button>
+      <button id="stopBtn" class="btn secondary" disabled>Stop Recording</button>
+    </div>
+
+    <audio id="audioPreview" controls class="audio-preview"></audio>
+
+    <form id="uploadForm" class="form-box">
+      <label for="transcript">Transcript (optional):</label>
+      <textarea id="transcript" name="transcript" rows="4"></textarea>
+      <button type="submit" class="btn upload-btn">Upload</button>
+    </form>
+
+    <p id="status"></p>
   </div>
-
-  <audio id="audioPreview" controls></audio>
-
-  <form id="uploadForm">
-    <label for="transcript">Transcript (optional):</label><br />
-    <textarea id="transcript" name="transcript" rows="4" cols="50"></textarea><br /><br />
-    <button type="submit">Upload</button>
-  </form>
-
-  <p id="status"></p>
 
   <script src="script.js"></script>
 </body>

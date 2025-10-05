@@ -6,9 +6,18 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <h2>Saved Recordings</h2>
+  <nav class="navbar">
+    <h1 class="logo">Ogiek Recorder</h1>
+    <ul>
+      <li><a href="index.html">Record</a></li>
+      <li><a href="view.html" class="active">View Recordings</a></li>
+    </ul>
+  </nav>
 
-  <div id="recordingsContainer"></div>
+  <div class="container">
+    <h2>Saved Recordings</h2>
+    <div id="recordingsContainer" class="recordings-list"></div>
+  </div>
 
   <script src="view.js"></script>
 </body>
